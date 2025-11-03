@@ -1,7 +1,7 @@
 .include dff_params.cir
 .include dff.cir
 
-.lib _PDK_ROOT/libs.tech/combined/sky130.lib.spice tt
+.lib _PDK_ROOT/libs.tech/combined/sky130.lib.spice _CORNER
 
 Xdff VDD VSS ip in op on ckp ckn dff winp={winp} wclk={wclk} wlat={wlat}
                                     +nfinp={nfinp} nfclk={nfclk} nflat={nflat}
