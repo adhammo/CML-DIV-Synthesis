@@ -1,0 +1,151 @@
+**.subckt cml_char
+** full_steering
+XMFULL VD VG VS GND sky130_fd_pr__nfet_01v8_lvt L=length W=10 nf=10 ad=0.725 as=0.87 pd=7.9 ps=9.48 nrd=0.058 nrs=0.058 sa=0 sb=0
++ sd=0 mult=1 m=1
+** small_signal
+XMSMALL VDSM VGSM VSSM GND sky130_fd_pr__nfet_01v8_lvt L=length W=10 nf=10 ad=0.725 as=0.87 pd=7.9 ps=9.48 nrd=0.058 nrs=0.058 sa=0
++ sb=0 sd=0 mult=1 m=1
+** diff_pair
+XMON net6 net5 net3 GND sky130_fd_pr__nfet_01v8_lvt L=length W=10 nf=10 ad=0.725 as=0.87 pd=7.9 ps=9.48 nrd=0.058 nrs=0.058 sa=0
++ sb=0 sd=0 mult=1 m=1
+XMOFF net7 net4 net3 GND sky130_fd_pr__nfet_01v8_lvt L=length W=10 nf=10 ad=0.725 as=0.87 pd=7.9 ps=9.48 nrd=0.058 nrs=0.058 sa=0
++ sb=0 sd=0 mult=1 m=1
+
+**** begin user architecture code
+
+** supply
+V0 AVDD GND VDD
+
+** full_steering_gate
+VP1 P1 GND dc 0 ac 1 portnum 1 z0 50
+C1 P1 VG 1u m=1
+V1 net2 GND VDD
+L9 VG net2 1u m=1
+** full_steering_drain
+VP2 P2 GND dc 0 ac 1 portnum 2 z0 50
+C2 VD P2 1u m=1
+V2 AVDD net1 0.3
+L10 VD net1 1u m=1
+** full_steering_source
+*VP3 P3 GND dc 0 ac 1 portnum 3 z0 50
+C3 VS GND 1u m=1
+I1 VS GND {2*100*5e-6}
+
+** small_signal_sources
+V3 AVDD VGSM {0.3/2}
+V4 AVDD VDSM {0.3/2}
+I2 VSSM GND {100*5e-6}
+
+** diff_pair_sources
+V5 net5 GND VDD
+V6 AVDD net4 0.3
+V7 AVDD net6 0.3
+V8 net7 GND VDD
+I3 net3 GND {2*100*5e-6}
+
+* parameters
+.param VDD = 1.8
+.param length = .150
+.temp 25
+.lib /content/open_pdks/sky130/sky130A/libs.tech/combined/sky130.lib.spice tt
+
+* save
+.save @m.xmfull.msky130_fd_pr__nfet_01v8_lvt[gm]
+.save @m.xmfull.msky130_fd_pr__nfet_01v8_lvt[vth]
+.save @m.xmfull.msky130_fd_pr__nfet_01v8_lvt[vdsat]
+.save @m.xmfull.msky130_fd_pr__nfet_01v8_lvt[cgg]
+.save @m.xmfull.msky130_fd_pr__nfet_01v8_lvt[cgso]
+.save @m.xmfull.msky130_fd_pr__nfet_01v8_lvt[cgdo]
+.save @m.xmsmall.msky130_fd_pr__nfet_01v8_lvt[gm]
+.save @m.xmsmall.msky130_fd_pr__nfet_01v8_lvt[gds]
+.save @m.xmon.msky130_fd_pr__nfet_01v8_lvt[id]
+
+.control
+
+save all
+
+set filetype = ascii
+set hcopydevtype = svg
+set format = cross
+
+let width = 10e-6
+
+let vsw_start_val = 0.2
+let vsw_end_val = 0.4
+let vsw_step_size = 0.025
+
+let idw_start_val = 0.1
+let idw_stop_val = 1000
+let idw_points_per_decade = 20
+
+let vsw_num_points = (vsw_end_val-vsw_start_val)/vsw_step_size+1
+
+let log_start = log10(idw_start_val)
+let log_stop = log10(idw_stop_val)
+let num_decades = log_stop - log_start
+let num_points = idw_points_per_decade * num_decades + 1
+let log_step = (log_stop - log_start) / (num_points - 1)
+
+set appendwrite
+echo '_ vsw _ idw _ vgs _ gm _ gds _ vsr _ gm_full _ margin _ margin_vth' > cml_char_op.csv
+echo '_ vsw _ idw _ cgs _ cgd _ cdb _ csb' > cml_char_sp.csv
+
+let j = 0
+while j < vsw_num_points
+
+    let i = 0
+    while i < num_points
+
+        let vsw_value = vsw_start_val + j * vsw_step_size
+        let idw_value = 10^(log_start + i * log_step)
+        let idc = $&idw_value*width
+        let idc_2 = 2*idc
+        
+        echo $&vsw_value $&idw_value
+        
+        alter V2 = $&vsw_value
+        alter V3 = $&vsw_value/2
+        alter V4 = $&vsw_value/2
+        alter V6 = $&vsw_value
+        alter V7 = $&vsw_value
+        
+        alter I1 = $&idc_2
+        alter I2 = $&idc
+        alter I3 = $&idc_2
+
+        OP
+        let vgs = v(VG,VS)
+        let gm = @m.xmsmall.msky130_fd_pr__nfet_01v8_lvt[gm]/$&idc
+        let gds = @m.xmsmall.msky130_fd_pr__nfet_01v8_lvt[gds]/$&idc
+        let vsr = @m.xmon.msky130_fd_pr__nfet_01v8_lvt[id]/$&idc_2*100
+        let gm_full = @m.xmfull.msky130_fd_pr__nfet_01v8_lvt[gm]/$&idc_2
+        let margin = v(VG,VS)-@m.xmfull.msky130_fd_pr__nfet_01v8_lvt[vdsat]-$&vsw_value
+        let margin_vth = @m.xmfull.msky130_fd_pr__nfet_01v8_lvt[vth]-$&vsw_value
+        wrdata cml_char_op.csv vsw_value idw_value vgs gm gds vsr gm_full margin margin_vth
+
+        remzerovec
+
+        SP LIN 1 10G 10G
+        let cgs = imag(Y_1_1+Y_1_2)/(2*pi*10G)/$&idc_2
+        let cgd = imag(-Y_1_2)/(2*pi*10G)/$&idc_2
+        let cdb = imag(Y_2_2+Y_1_2)/(2*pi*10G)/$&idc_2
+        let csb = imag(Y_2_2+Y_1_2)/(2*pi*10G)/$&idc_2
+        wrdata cml_char_sp.csv vsw_value idw_value cgs cgd cdb csb
+
+        remzerovec
+
+        let i = i + 1
+
+    end
+
+    let j = j + 1
+
+end
+
+.endc
+
+
+**** end user architecture code
+
+.GLOBAL GND
+.end
