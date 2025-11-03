@@ -1,0 +1,12 @@
+.param winp=$winp
+.param wclk=$wclk
+.param wlat=$wlat
+.param nfinp=$nfinp
+.param nfclk=$nfclk
+.param nflat=$nflat
+.param vsw=$vsw
+.param iss=$iss
+.param vsw_in=$vsw_in
+.param vsw_clk=$vsw_clk
+.param cm_clk=$cm_clk
+.param cload=$cload

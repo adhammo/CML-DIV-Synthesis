@@ -1,0 +1,32 @@
+.subckt dff VDD VSS ip in op on ckp ckn winp=1 wclk=1 wlat=1 nfinp=2 nfclk=2 nflat=2 vsw=0.3 iss=1m
+*.iopin VDD
+*.iopin VSS
+*.ipin ip
+*.ipin in
+*.opin op
+*.opin on
+*.ipin ckp
+*.ipin ckn
+
+XM2 on ip vdckp VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W=winp nf=nfinp ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM1 op in vdckp VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W=winp nf=nfinp ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM3 vdckp ckp vsck VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W=wclk nf=nfclk ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM4 vdckn ckn vsck VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W=wclk nf=nfclk ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM5 on op vdckn VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W=wlat nf=nflat ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+XM6 op on vdckn VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W=wlat nf=nflat ad='int((nf+1)/2) * W/nf * 0.29' as='int((nf+2)/2) * W/nf * 0.29'
++ pd='2*int((nf+1)/2) * (W/nf + 0.29)' ps='2*int((nf+2)/2) * (W/nf + 0.29)' nrd='0.29 / W' nrs='0.29 / W' sa=0 sb=0 sd=0 mult=1 m=1
+
+;XR1 on VDD VSS sky130_fd_pr__res_high_po W={695.5/(vsw/iss)} L=1 mult=1 m=1
+;XR2 op VDD VSS sky130_fd_pr__res_high_po W={695.5/(vsw/iss)} L=1 mult=1 m=1
+
+R1 on VDD {vsw/iss} m=1
+R2 op VDD {vsw/iss} m=1
+
+I1 vsck VSS iss
+
+.ends
