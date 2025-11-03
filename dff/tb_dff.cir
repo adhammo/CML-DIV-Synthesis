@@ -15,8 +15,8 @@ Xbalun2 clkdiff clkcm ckp ckn balun
 
 vvdd VDD 0 _VDD
 vvss VSS 0 0
-vinput indiff 0 dc {vsw_in} PULSE({-vsw_in} {vsw_in} 0 5p 5p 400p 800p)
-vclk clkdiff 0 dc {vsw_clk} PULSE({-vsw_clk} {vsw_clk} 30p 5p 5p 400p 800p)
+vinput indiff 0 dc {vsw_in} PULSE({-vsw_in} {vsw_in} 10p 5p 5p 400p 800p)
+vclk clkdiff 0 dc {vsw_clk} PULSE({-vsw_clk} {vsw_clk} 40p 5p 5p 400p 800p)
 V1 incm 0 {_VDD-vsw_in/2}
 V2 clkcm 0 {_VDD-cm_clk-vsw_clk/2}
 
@@ -34,7 +34,7 @@ set format = cross
 set appendwrite
 echo "prop_delay" > outputs.csv
 
-tran 1p 400p
+tran 5p 200p
 wrdata results.txt v(ip,in) v(ckp,ckn) v(op,on)
 let x = v(ckp)-v(ckn)
 let y = v(op)-v(on)
