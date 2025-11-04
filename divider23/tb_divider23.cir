@@ -3,7 +3,7 @@
 
 .lib _PDK_ROOT/libs.tech/combined/sky130.lib.spice _CORNER
 
-Xdiv VSS VDD op on ckp ckn dff
+Xdiv VSS VDD op on ckp ckn divider23
  +and_win1={and_win1} and_win2={and_win2} and_nfin1={and_nfin1} and_nfin2={and_nfin2} and_vsw={and_vsw} and_iss={and_iss}
  +dff1_latch1_winp={dff1_latch1_winp} dff1_latch1_wclk={dff1_latch1_wclk} dff1_latch1_wlat={dff1_latch1_wlat} dff1_latch1_nfinp={dff1_latch1_nfinp} dff1_latch1_nfclk={dff1_latch1_nfclk} dff1_latch1_nflat={dff1_latch1_nflat} dff1_latch1_vsw={dff1_latch1_vsw} dff1_latch1_iss={dff1_latch1_iss} dff1_latch2_winp={dff1_latch2_winp} dff1_latch2_wclk={dff1_latch2_wclk} dff1_latch2_wlat={dff1_latch2_wlat} dff1_latch2_nfinp={dff1_latch2_nfinp} dff1_latch2_nfclk={dff1_latch2_nfclk} dff1_latch2_nflat={dff1_latch2_nflat} dff1_latch2_vsw={dff1_latch2_vsw} dff1_latch2_iss={dff1_latch2_iss}
  +or_win1={or_win1} or_win2={or_win2} or_nfin1={or_nfin1} or_nfin2={or_nfin2} or_vsw={or_vsw} or_iss={or_iss}
@@ -20,7 +20,7 @@ Xbalun2 clkdiff clkcm ckp ckn balun
 vvdd VDD 0 _VDD
 vvss VSS 0 0
 vmc mcdiff 0 dc {-vsw_mc}
-vclk clkdiff 0 dc {-vsw_clk} PULSE({-vsw_clk} {vsw_clk} 10p 5p 5p 95p 200p)
+vclk clkdiff 0 dc {-vsw_clk} PULSE({-vsw_clk} {vsw_clk} _TRISE _TRISE _TRISE {_PERIOD/2-_TRISE} _PERIOD)
 V1 mccm VSS {_VDD-vsw_mc/2}
 V2 clkcm 0 {_VDD-cm_clk-vsw_clk/2}
 
@@ -33,14 +33,15 @@ set hcopydevtype = svg
 set format = cross
 
 set appendwrite
-echo "prop_delay" > outputs.csv
 
-tran 5p 2000p
-wrdata results.txt v(ckp,ckn) v(op,on)
-let x = v(ckp)-v(ckn)
-let y = v(oip)-v(oin)
-meas tran tdiff TRIG x VAL=0 RISE=3 TARG y VAL=0 RISE=2
-echo "$&tdiff" >> outputs.csv
+tran _TSTEP _TSTOP
+wrdata results2.txt v(ckp,ckn) v(op,on)
+
+alter vmc = {vsw_mc}
+
+tran _TSTEP _TSTOP
+wrdata results3.txt v(ckp,ckn) v(op,on)
+
 .endc
 
 .subckt balun d c p n
