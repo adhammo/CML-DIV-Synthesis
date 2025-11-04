@@ -20,7 +20,7 @@ Xbalun2 clkdiff clkcm ckp ckn balun
 
 vvdd VDD 0 _VDD
 vvss VSS 0 0
-vclk clkdiff 0 dc {-vsw_clk} PULSE({-vsw_clk} {vsw_clk} 0 {1/(10*freq)} {1/(10*freq)} {1/(2*freq)-1/(10*freq)} {1/freq})
+vclk clkdiff 0 dc {-vsw_clk} PULSE({-vsw_clk} {vsw_clk} {period/10} {period/10} {period/10} {period/2-period/10} period)
 V2 clkcm 0 {_VDD-cm_clk-vsw_clk/2}
 
 .control
@@ -33,7 +33,7 @@ set format = cross
 
 set appendwrite
 
-tran {1/(10*freq)} {10/freq}
+tran {period/10} {10*period}
 wrdata results.txt v(ckp,ckn) v(op,on)
 
 .endc

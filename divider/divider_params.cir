@@ -21,4 +21,4 @@
 .param cm_clk=$cm_clk
 .param cwire=$cwire
 .param cload=$cload
-.param freq=$freq
+.param period=$period
