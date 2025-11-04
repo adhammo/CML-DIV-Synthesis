@@ -64,8 +64,8 @@ R2 VDD mp {latch1_vsw/latch1_iss} m=1
 R3 VDD on {latch2_vsw/latch2_iss} m=1
 R4 VDD op {latch2_vsw/latch2_iss} m=1
 
-I2 net5 VSS {latch2_iss}
 I1 net2 VSS {latch1_iss}
+I2 net5 VSS {latch2_iss}
 
 C3 op VSS {cwire} m=1
 C4 on VSS {cwire} m=1
@@ -80,7 +80,7 @@ C2 mn VSS {cwire} m=1
 .ends
 
 
-.subckt gate op on ip1 in1 VDD VSS ip2 in2   win1=10 win2=10 nfin1=5 nfin2=5 vsw=0.3 iss=1m vdd=1.8
+.subckt gate op on ip1 in1 VDD VSS ip2 in2 win1=10 win2=10 nfin1=5 nfin2=5 vsw=0.3 iss=1m vdd=1.8
 *.iopin VSS
 *.iopin VDD
 *.opin op
