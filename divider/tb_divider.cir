@@ -3,7 +3,7 @@
 
 .lib _PDK_ROOT/libs.tech/combined/sky130.lib.spice _CORNER
 
-Xdiv VSS VDD op on ckp ckn dff
+Xdiv VSS VDD op on ckp ckn divider
  +latch1_winp={latch1_winp} latch1_wclk={latch1_wclk} latch1_wlat={latch1_wlat}
  +latch1_nfinp={latch1_nfinp} latch1_nfclk={latch1_nfclk} latch1_nflat={latch1_nflat}
  +latch1_vsw={latch1_vsw} latch1_iss={latch1_iss}
@@ -11,7 +11,7 @@ Xdiv VSS VDD op on ckp ckn dff
  +latch2_nfinp={latch2_nfinp} latch2_nfclk={latch2_nfclk} latch2_nflat={latch2_nflat}
  +latch2_vsw={latch2_vsw} latch2_iss={latch2_iss}
  +sf_w={sf_w} sf_nf={sf_nf} sf_iss={sf_iss}
- cwire={cwire} vdd={_VDD}
+ +cwire={cwire} vdd={_VDD}
 
 C1 op VSS {cload} m=1
 C2 on VSS {cload} m=1
@@ -37,7 +37,7 @@ echo "prop_delay" > outputs.csv
 tran 5p 2000p
 wrdata results.txt v(ckp,ckn) v(op,on)
 let x = v(ckp)-v(ckn)
-let y = v(oip)-v(oin)
+let y = v(op)-v(on)
 meas tran tdiff TRIG x VAL=0 RISE=3 TARG y VAL=0 RISE=2
 echo "$&tdiff" >> outputs.csv
 .endc

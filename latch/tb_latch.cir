@@ -1,11 +1,11 @@
-.include dff_params.cir
-.include dff.cir
+.include latch_params.cir
+.include latch.cir
 
 .lib _PDK_ROOT/libs.tech/combined/sky130.lib.spice _CORNER
 
-Xdff VDD VSS ip in op on ckp ckn dff winp={winp} wclk={wclk} wlat={wlat}
-                                    +nfinp={nfinp} nfclk={nfclk} nflat={nflat}
-                                    +vsw={vsw} iss={iss}
+Xlatch VDD VSS ip in op on ckp ckn latch winp={winp} wclk={wclk} wlat={wlat}
+                                        +nfinp={nfinp} nfclk={nfclk} nflat={nflat}
+                                        +vsw={vsw} iss={iss}
 
 C1 op VSS {cload} m=1
 C2 on VSS {cload} m=1

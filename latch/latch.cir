@@ -1,4 +1,4 @@
-.subckt dff VDD VSS ip in op on ckp ckn winp=10 wclk=10 wlat=10 nfinp=5 nfclk=5 nflat=5 vsw=0.3 iss=1m
+.subckt latch VDD VSS ip in op on ckp ckn winp=10 wclk=10 wlat=10 nfinp=5 nfclk=5 nflat=5 vsw=0.3 iss=1m
 *.iopin VDD
 *.iopin VSS
 *.ipin ip
