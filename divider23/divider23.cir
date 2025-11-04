@@ -1,0 +1,154 @@
+.subckt dff op on ip in ckp ckn VDD VSS latch1_winp=10 latch1_wclk=10 latch1_wlat=10 latch1_nfinp=5 latch1_nfclk=5
++ latch1_nflat=5 latch1_vsw=0.3 latch1_iss=1m latch2_winp=10 latch2_wclk=10 latch2_wlat=10 latch2_nfinp=5 latch2_nfclk=5 latch2_nflat=5
++ latch2_vsw=0.3 latch2_iss=1m vdd=1.8
+*.iopin VSS
+*.iopin VDD
+*.opin op
+*.opin on
+*.ipin ip
+*.ipin in
+*.ipin ckp
+*.ipin ckn
+
+XM2 mn ip net1 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch1_winp} nf={latch1_nfinp} ad='int(({latch1_nfinp} + 1)/2) * {latch1_winp} / {latch1_nfinp} * 0.29'
++ as='int(({latch1_nfinp} + 2)/2) * {latch1_winp} / {latch1_nfinp} * 0.29' pd='2*int(({latch1_nfinp} + 1)/2) * ({latch1_winp} / {latch1_nfinp} + 0.29)'
++ ps='2*int(({latch1_nfinp} + 2)/2) * ({latch1_winp} / {latch1_nfinp} + 0.29)' nrd='0.29 / {latch1_winp} ' nrs='0.29 / {latch1_winp} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM1 mp in net1 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch1_winp} nf={latch1_nfinp} ad='int(({latch1_nfinp} + 1)/2) * {latch1_winp} / {latch1_nfinp} * 0.29'
++ as='int(({latch1_nfinp} + 2)/2) * {latch1_winp} / {latch1_nfinp} * 0.29' pd='2*int(({latch1_nfinp} + 1)/2) * ({latch1_winp} / {latch1_nfinp} + 0.29)'
++ ps='2*int(({latch1_nfinp} + 2)/2) * ({latch1_winp} / {latch1_nfinp} + 0.29)' nrd='0.29 / {latch1_winp} ' nrs='0.29 / {latch1_winp} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM3 net1 ckn net2 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch1_wclk} nf={latch1_nfclk} ad='int(({latch1_nfclk} + 1)/2) * {latch1_wclk} / {latch1_nfclk} * 0.29'
++ as='int(({latch1_nfclk} + 2)/2) * {latch1_wclk} / {latch1_nfclk} * 0.29' pd='2*int(({latch1_nfclk} + 1)/2) * ({latch1_wclk} / {latch1_nfclk} + 0.29)'
++ ps='2*int(({latch1_nfclk} + 2)/2) * ({latch1_wclk} / {latch1_nfclk} + 0.29)' nrd='0.29 / {latch1_wclk} ' nrs='0.29 / {latch1_wclk} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM4 net3 ckp net2 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch1_wclk} nf={latch1_nfclk} ad='int(({latch1_nfclk} + 1)/2) * {latch1_wclk} / {latch1_nfclk} * 0.29'
++ as='int(({latch1_nfclk} + 2)/2) * {latch1_wclk} / {latch1_nfclk} * 0.29' pd='2*int(({latch1_nfclk} + 1)/2) * ({latch1_wclk} / {latch1_nfclk} + 0.29)'
++ ps='2*int(({latch1_nfclk} + 2)/2) * ({latch1_wclk} / {latch1_nfclk} + 0.29)' nrd='0.29 / {latch1_wclk} ' nrs='0.29 / {latch1_wclk} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM5 mn mp net3 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch1_wlat} nf={latch1_nflat} ad='int(({latch1_nflat} + 1)/2) * {latch1_wlat} / {latch1_nflat} * 0.29'
++ as='int(({latch1_nflat} + 2)/2) * {latch1_wlat} / {latch1_nflat} * 0.29' pd='2*int(({latch1_nflat} + 1)/2) * ({latch1_wlat} / {latch1_nflat} + 0.29)'
++ ps='2*int(({latch1_nflat} + 2)/2) * ({latch1_wlat} / {latch1_nflat} + 0.29)' nrd='0.29 / {latch1_wlat} ' nrs='0.29 / {latch1_wlat} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM6 mp mn net3 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch1_wlat} nf={latch1_nflat} ad='int(({latch1_nflat} + 1)/2) * {latch1_wlat} / {latch1_nflat} * 0.29'
++ as='int(({latch1_nflat} + 2)/2) * {latch1_wlat} / {latch1_nflat} * 0.29' pd='2*int(({latch1_nflat} + 1)/2) * ({latch1_wlat} / {latch1_nflat} + 0.29)'
++ ps='2*int(({latch1_nflat} + 2)/2) * ({latch1_wlat} / {latch1_nflat} + 0.29)' nrd='0.29 / {latch1_wlat} ' nrs='0.29 / {latch1_wlat} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM7 on mp net4 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch2_winp} nf={latch2_nfinp} ad='int(({latch2_nfinp} + 1)/2) * {latch2_winp} / {latch2_nfinp} * 0.29'
++ as='int(({latch2_nfinp} + 2)/2) * {latch2_winp} / {latch2_nfinp} * 0.29' pd='2*int(({latch2_nfinp} + 1)/2) * ({latch2_winp} / {latch2_nfinp} + 0.29)'
++ ps='2*int(({latch2_nfinp} + 2)/2) * ({latch2_winp} / {latch2_nfinp} + 0.29)' nrd='0.29 / {latch2_winp} ' nrs='0.29 / {latch2_winp} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM8 op mn net4 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch2_winp} nf={latch2_nfinp} ad='int(({latch2_nfinp} + 1)/2) * {latch2_winp} / {latch2_nfinp} * 0.29'
++ as='int(({latch2_nfinp} + 2)/2) * {latch2_winp} / {latch2_nfinp} * 0.29' pd='2*int(({latch2_nfinp} + 1)/2) * ({latch2_winp} / {latch2_nfinp} + 0.29)'
++ ps='2*int(({latch2_nfinp} + 2)/2) * ({latch2_winp} / {latch2_nfinp} + 0.29)' nrd='0.29 / {latch2_winp} ' nrs='0.29 / {latch2_winp} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM9 net4 ckp net5 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch2_wclk} nf={latch2_nfclk} ad='int(({latch2_nfclk} + 1)/2) * {latch2_wclk} / {latch2_nfclk} * 0.29'
++ as='int(({latch2_nfclk} + 2)/2) * {latch2_wclk} / {latch2_nfclk} * 0.29' pd='2*int(({latch2_nfclk} + 1)/2) * ({latch2_wclk} / {latch2_nfclk} + 0.29)'
++ ps='2*int(({latch2_nfclk} + 2)/2) * ({latch2_wclk} / {latch2_nfclk} + 0.29)' nrd='0.29 / {latch2_wclk} ' nrs='0.29 / {latch2_wclk} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM10 net6 ckn net5 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch2_wclk} nf={latch2_nfclk} ad='int(({latch2_nfclk} + 1)/2) * {latch2_wclk} / {latch2_nfclk} * 0.29'
++ as='int(({latch2_nfclk} + 2)/2) * {latch2_wclk} / {latch2_nfclk} * 0.29' pd='2*int(({latch2_nfclk} + 1)/2) * ({latch2_wclk} / {latch2_nfclk} + 0.29)'
++ ps='2*int(({latch2_nfclk} + 2)/2) * ({latch2_wclk} / {latch2_nfclk} + 0.29)' nrd='0.29 / {latch2_wclk} ' nrs='0.29 / {latch2_wclk} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM11 on op net6 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch2_wlat} nf={latch2_nflat} ad='int(({latch2_nflat} + 1)/2) * {latch2_wlat} / {latch2_nflat} * 0.29'
++ as='int(({latch2_nflat} + 2)/2) * {latch2_wlat} / {latch2_nflat} * 0.29' pd='2*int(({latch2_nflat} + 1)/2) * ({latch2_wlat} / {latch2_nflat} + 0.29)'
++ ps='2*int(({latch2_nflat} + 2)/2) * ({latch2_wlat} / {latch2_nflat} + 0.29)' nrd='0.29 / {latch2_wlat} ' nrs='0.29 / {latch2_wlat} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+XM12 op on net6 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={latch2_wlat} nf={latch2_nflat} ad='int(({latch2_nflat} + 1)/2) * {latch2_wlat} / {latch2_nflat} * 0.29'
++ as='int(({latch2_nflat} + 2)/2) * {latch2_wlat} / {latch2_nflat} * 0.29' pd='2*int(({latch2_nflat} + 1)/2) * ({latch2_wlat} / {latch2_nflat} + 0.29)'
++ ps='2*int(({latch2_nflat} + 2)/2) * ({latch2_wlat} / {latch2_nflat} + 0.29)' nrd='0.29 / {latch2_wlat} ' nrs='0.29 / {latch2_wlat} '
++ sa=0 sb=0 sd=0 mult=1 m=1
+
+R1 VDD mn {latch1_vsw/latch1_iss} m=1
+R2 VDD mp {latch1_vsw/latch1_iss} m=1
+R3 VDD on {latch2_vsw/latch2_iss} m=1
+R4 VDD op {latch2_vsw/latch2_iss} m=1
+
+I2 net5 VSS {latch2_iss}
+I1 net2 VSS {latch1_iss}
+
+C3 op VSS {cwire} m=1
+C4 on VSS {cwire} m=1
+C1 mp VSS {cwire} m=1
+C2 mn VSS {cwire} m=1
+
+.IC V(mp)={vdd-latch1_vsw}
+.IC V(mn)={vdd}
+.IC V(op)={vdd}
+.IC V(on)={vdd-latch2_vsw}
+
+.ends
+
+
+.subckt gate op on ip1 in1 VDD VSS ip2 in2   win1=10 win2=10 nfin1=5 nfin2=5 vsw=0.3 iss=1m vdd=1.8
+*.iopin VSS
+*.iopin VDD
+*.opin op
+*.opin on
+*.ipin ip1
+*.ipin in1
+*.ipin ip2
+*.ipin in2
+
+XM2 on ip1 net1 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={win1} nf={nfin1} ad='int(({nfin1} + 1)/2) * {win1} / {nfin1} * 0.29' as='int(({nfin1} + 2)/2) * {win1} / {nfin1} * 0.29'
++ pd='2*int(({nfin1} + 1)/2) * ({win1} / {nfin1} + 0.29)' ps='2*int(({nfin1} + 2)/2) * ({win1} / {nfin1} + 0.29)' nrd='0.29 / {win1} '
++ nrs='0.29 / {win1} ' sa=0 sb=0 sd=0 mult=1 m=1
+XM1 op in1 net1 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={win1} nf={nfin1} ad='int(({nfin1} + 1)/2) * {win1} / {nfin1} * 0.29' as='int(({nfin1} + 2)/2) * {win1} / {nfin1} * 0.29'
++ pd='2*int(({nfin1} + 1)/2) * ({win1} / {nfin1} + 0.29)' ps='2*int(({nfin1} + 2)/2) * ({win1} / {nfin1} + 0.29)' nrd='0.29 / {win1} '
++ nrs='0.29 / {win1} ' sa=0 sb=0 sd=0 mult=1 m=1
+XM3 net1 ip2 net2 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={win2} nf={nfin2} ad='int(({nfin2} + 1)/2) * {win2} / {nfin2} * 0.29' as='int(({nfin2} + 2)/2) * {win2} / {nfin2} * 0.29'
++ pd='2*int(({nfin2} + 1)/2) * ({win2} / {nfin2} + 0.29)' ps='2*int(({nfin2} + 2)/2) * ({win2} / {nfin2} + 0.29)' nrd='0.29 / {win2} '
++ nrs='0.29 / {win2} ' sa=0 sb=0 sd=0 mult=1 m=1
+XM4 net3 in2 net2 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={win2} nf={nfin2} ad='int(({nfin2} + 1)/2) * {win2} / {nfin2} * 0.29' as='int(({nfin2} + 2)/2) * {win2} / {nfin2} * 0.29'
++ pd='2*int(({nfin2} + 1)/2) * ({win2} / {nfin2} + 0.29)' ps='2*int(({nfin2} + 2)/2) * ({win2} / {nfin2} + 0.29)' nrd='0.29 / {win2} '
++ nrs='0.29 / {win2} ' sa=0 sb=0 sd=0 mult=1 m=1
+XM5 on net3 net3 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={win1} nf={nfin1} ad='int(({nfin1} + 1)/2) * {win1} / {nfin1} * 0.29' as='int(({nfin1} + 2)/2) * {win1} / {nfin1} * 0.29'
++ pd='2*int(({nfin1} + 1)/2) * ({win1} / {nfin1} + 0.29)' ps='2*int(({nfin1} + 2)/2) * ({win1} / {nfin1} + 0.29)' nrd='0.29 / {win1} '
++ nrs='0.29 / {win1} ' sa=0 sb=0 sd=0 mult=1 m=1
+XM6 op VDD net3 VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={win1} nf={nfin1} ad='int(({nfin1} + 1)/2) * {win1} / {nfin1} * 0.29' as='int(({nfin1} + 2)/2) * {win1} / {nfin1} * 0.29'
++ pd='2*int(({nfin1} + 1)/2) * ({win1} / {nfin1} + 0.29)' ps='2*int(({nfin1} + 2)/2) * ({win1} / {nfin1} + 0.29)' nrd='0.29 / {win1} '
++ nrs='0.29 / {win1} ' sa=0 sb=0 sd=0 mult=1 m=1
+
+R1 VDD on {vsw/iss} m=1
+R2 VDD op {vsw/iss} m=1
+
+I1 net2 VSS {iss}
+
+C1 op VSS {cwire} m=1
+C2 on VSS {cwire} m=1
+
+.IC V(op)={vdd-vsw}
+.IC V(on)={vdd}
+
+.ends
+
+.subckt divider23 VSS VDD op on ckp ckn mcp mcn and_win1=10 and_win2=10 and_nfin1=5 and_nfin2=5 and_vsw=0.3 and_iss=1m
+ +dff1_latch1_winp=10 dff1_latch1_wclk=10 dff1_latch1_wlat=10 dff1_latch1_nfinp=5 dff1_latch1_nfclk=5 dff1_latch1_nflat=5 dff1_latch1_vsw=0.3 dff1_latch1_iss=1m
+ +dff1_latch2_winp=10 dff1_latch2_wclk=10 dff1_latch2_wlat=10 dff1_latch2_nfinp=5 dff1_latch2_nfclk=5 dff1_latch2_nflat=5 dff1_latch2_vsw=0.3 dff1_latch2_iss=1m
+ +or_win1=10 or_win2=10 or_nfin1=5 or_nfin2=5 or_vsw=0.3 or_iss=1m
+ +dff2_latch1_winp=10 dff2_latch1_wclk=10 dff2_latch1_wlat=10 dff2_latch1_nfinp=5 dff2_latch1_nfclk=5 dff2_latch1_nflat=5 dff2_latch1_vsw=0.3 dff2_latch1_iss=1m
+ +dff2_latch2_winp=10 dff2_latch2_wclk=10 dff2_latch2_wlat=10 dff2_latch2_nfinp=5 dff2_latch2_nfclk=5 dff2_latch2_nflat=5 dff2_latch2_vsw=0.3 dff2_latch2_iss=1m
+ +sf_w=10 sf_nf=5 sf_iss=1m
+ +cwire=10f vdd=1.8
+
+XM13 VDD oip op VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={sf_w} nf={sf_nf} ad='int(({sf_nf} + 1)/2) * {sf_w} / {sf_nf} * 0.29' as='int(({sf_nf} + 2)/2) * {sf_w} / {sf_nf} * 0.29'
++ pd='2*int(({sf_nf} + 1)/2) * ({sf_w} / {sf_nf} + 0.29)' ps='2*int(({sf_nf} + 2)/2) * ({sf_w} / {sf_nf} + 0.29)' nrd='0.29 / {sf_w} '
++ nrs='0.29 / {sf_w} ' sa=0 sb=0 sd=0 mult=1 m=1
+XM14 VDD oin on VSS sky130_fd_pr__nfet_01v8_lvt L=0.15 W={sf_w} nf={sf_nf} ad='int(({sf_nf} + 1)/2) * {sf_w} / {sf_nf} * 0.29' as='int(({sf_nf} + 2)/2) * {sf_w} / {sf_nf} * 0.29'
++ pd='2*int(({sf_nf} + 1)/2) * ({sf_w} / {sf_nf} + 0.29)' ps='2*int(({sf_nf} + 2)/2) * ({sf_w} / {sf_nf} + 0.29)' nrd='0.29 / {sf_w} '
++ nrs='0.29 / {sf_w} ' sa=0 sb=0 sd=0 mult=1 m=1
+xdff2 oip oin net5 net4 ckp ckn VDD VSS dff latch1_winp={dff2_latch1_winp} latch1_wclk={dff2_latch1_wclk} latch1_wlat={dff2_latch1_wlat}
++ latch1_nfinp={dff2_latch1_nfinp} latch1_nfclk={dff2_latch1_nfclk} latch1_nflat={dff2_latch1_nflat} latch1_vsw={dff2_latch1_vsw} latch1_iss={dff2_latch1_iss}
++ latch2_winp={dff2_latch2_winp} latch2_wclk={dff2_latch2_wclk} latch2_wlat={dff2_latch2_wlat} latch2_nfinp={dff2_latch2_nfinp} latch2_nfclk={dff2_latch2_nfclk}
++ latch2_nflat={dff2_latch2_nflat} latch2_vsw={dff2_latch2_vsw} latch2_iss={dff2_latch2_iss} vdd={vdd}
+xor net4 net5 qn qp VDD VSS op on gate win1={or_win1} win2={or_win2} nfin1={or_nfin1} nfin2={or_nfin2} vsw={or_vsw} iss={or_iss} vdd={vdd}
+xand net2 net3 mcp mcn VDD VSS on op gate win1={and_win1} win2={and_win2} nfin1={and_nfin1} nfin2={and_nfin2} vsw={and_vsw} iss={and_iss} vdd={vdd}
+xdff1 qp qn net2 net3 ckp ckn VDD VSS dff latch1_winp={dff1_latch1_winp} latch1_wclk={dff1_latch1_wclk} latch1_wlat={dff1_latch1_wlat}
++ latch1_nfinp={dff1_latch1_nfinp} latch1_nfclk={dff1_latch1_nfclk} latch1_nflat={dff1_latch1_nflat} latch1_vsw={dff1_latch1_vsw} latch1_iss={dff1_latch1_iss}
++ latch2_winp={dff1_latch2_winp} latch2_wclk={dff1_latch2_wclk} latch2_wlat={dff1_latch2_wlat} latch2_nfinp={dff1_latch2_nfinp} latch2_nfclk={dff1_latch2_nfclk}
++ latch2_nflat={dff1_latch2_nflat} latch2_vsw={dff1_latch2_vsw} latch2_iss={dff1_latch2_iss} vdd={vdd}
+
+I3 op VSS {sf_iss}
+I4 on VSS {sf_iss}
+
+.ends

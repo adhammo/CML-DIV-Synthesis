@@ -1,0 +1,57 @@
+.include divider23_params.cir
+.include divider23.cir
+
+.lib _PDK_ROOT/libs.tech/combined/sky130.lib.spice _CORNER
+
+Xdiv VSS VDD op on ckp ckn dff
+ +and_win1={and_win1} and_win2={and_win2} and_nfin1={and_nfin1} and_nfin2={and_nfin2} and_vsw={and_vsw} and_iss={and_iss}
+ +dff1_latch1_winp={dff1_latch1_winp} dff1_latch1_wclk={dff1_latch1_wclk} dff1_latch1_wlat={dff1_latch1_wlat} dff1_latch1_nfinp={dff1_latch1_nfinp} dff1_latch1_nfclk={dff1_latch1_nfclk} dff1_latch1_nflat={dff1_latch1_nflat} dff1_latch1_vsw={dff1_latch1_vsw} dff1_latch1_iss={dff1_latch1_iss} dff1_latch2_winp={dff1_latch2_winp} dff1_latch2_wclk={dff1_latch2_wclk} dff1_latch2_wlat={dff1_latch2_wlat} dff1_latch2_nfinp={dff1_latch2_nfinp} dff1_latch2_nfclk={dff1_latch2_nfclk} dff1_latch2_nflat={dff1_latch2_nflat} dff1_latch2_vsw={dff1_latch2_vsw} dff1_latch2_iss={dff1_latch2_iss}
+ +or_win1={or_win1} or_win2={or_win2} or_nfin1={or_nfin1} or_nfin2={or_nfin2} or_vsw={or_vsw} or_iss={or_iss}
+ +dff2_latch1_winp={dff2_latch1_winp} dff2_latch1_wclk={dff2_latch1_wclk} dff2_latch1_wlat={dff2_latch1_wlat} dff2_latch1_nfinp={dff2_latch1_nfinp} dff2_latch1_nfclk={dff2_latch1_nfclk} dff2_latch1_nflat={dff2_latch1_nflat} dff2_latch1_vsw={dff2_latch1_vsw} dff2_latch1_iss={dff2_latch1_iss} dff2_latch2_winp={dff2_latch2_winp} dff2_latch2_wclk={dff2_latch2_wclk} dff2_latch2_wlat={dff2_latch2_wlat} dff2_latch2_nfinp={dff2_latch2_nfinp} dff2_latch2_nfclk={dff2_latch2_nfclk} dff2_latch2_nflat={dff2_latch2_nflat} dff2_latch2_vsw={dff2_latch2_vsw} dff2_latch2_iss={dff2_latch2_iss}
+ +sf_w={sf_w} sf_nf={sf_nf} sf_iss={sf_iss}
+ +cwire={cwire} vdd={_VDD}
+
+C1 op VSS {cload} m=1
+C2 on VSS {cload} m=1
+
+Xbalun1 mcdiff mccm mcp mcn balun
+Xbalun2 clkdiff clkcm ckp ckn balun
+
+vvdd VDD 0 _VDD
+vvss VSS 0 0
+vmc mcdiff 0 dc {-vsw_mc}
+vclk clkdiff 0 dc {-vsw_clk} PULSE({-vsw_clk} {vsw_clk} 10p 5p 5p 95p 200p)
+V1 mccm VSS {_VDD-vsw_mc/2}
+V2 clkcm 0 {_VDD-cm_clk-vsw_clk/2}
+
+.control
+
+save all
+
+set filetype = ascii
+set hcopydevtype = svg
+set format = cross
+
+set appendwrite
+echo "prop_delay" > outputs.csv
+
+tran 5p 2000p
+wrdata results.txt v(ckp,ckn) v(op,on)
+let x = v(ckp)-v(ckn)
+let y = v(oip)-v(oin)
+meas tran tdiff TRIG x VAL=0 RISE=3 TARG y VAL=0 RISE=2
+echo "$&tdiff" >> outputs.csv
+.endc
+
+.subckt balun d c p n
+E1 net4 c d 0 0.5
+V1 p net4 0
+F1 d 0 V1 -0.5
+R1 d 0 1T m=1
+E2 net2 n d 0 0.5
+V2 c net3 0
+F2 d 0 V2 -0.5
+R2 net3 net2 1u m=1
+.ends
+
+.end

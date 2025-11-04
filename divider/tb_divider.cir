@@ -1,0 +1,56 @@
+.include divider_params.cir
+.include divider.cir
+
+.lib _PDK_ROOT/libs.tech/combined/sky130.lib.spice _CORNER
+
+Xdiv VSS VDD op on ckp ckn dff
+ +latch1_winp={latch1_winp} latch1_wclk={latch1_wclk} latch1_wlat={latch1_wlat}
+ +latch1_nfinp={latch1_nfinp} latch1_nfclk={latch1_nfclk} latch1_nflat={latch1_nflat}
+ +latch1_vsw={latch1_vsw} latch1_iss={latch1_iss}
+ +latch2_winp={latch2_winp} latch2_wclk={latch2_wclk} latch2_wlat={latch2_wlat}
+ +latch2_nfinp={latch2_nfinp} latch2_nfclk={latch2_nfclk} latch2_nflat={latch2_nflat}
+ +latch2_vsw={latch2_vsw} latch2_iss={latch2_iss}
+ +sf_w={sf_w} sf_nf={sf_nf} sf_iss={sf_iss}
+ cwire={cwire} vdd={_VDD}
+
+C1 op VSS {cload} m=1
+C2 on VSS {cload} m=1
+
+Xbalun2 clkdiff clkcm ckp ckn balun
+
+vvdd VDD 0 _VDD
+vvss VSS 0 0
+vclk clkdiff 0 dc {-vsw_clk} PULSE({-vsw_clk} {vsw_clk} 10p 5p 5p 95p 200p)
+V2 clkcm 0 {_VDD-cm_clk-vsw_clk/2}
+
+.control
+
+save all
+
+set filetype = ascii
+set hcopydevtype = svg
+set format = cross
+
+set appendwrite
+echo "prop_delay" > outputs.csv
+
+tran 5p 2000p
+wrdata results.txt v(ckp,ckn) v(op,on)
+let x = v(ckp)-v(ckn)
+let y = v(oip)-v(oin)
+meas tran tdiff TRIG x VAL=0 RISE=3 TARG y VAL=0 RISE=2
+echo "$&tdiff" >> outputs.csv
+.endc
+
+.subckt balun d c p n
+E1 net4 c d 0 0.5
+V1 p net4 0
+F1 d 0 V1 -0.5
+R1 d 0 1T m=1
+E2 net2 n d 0 0.5
+V2 c net3 0
+F2 d 0 V2 -0.5
+R2 net3 net2 1u m=1
+.ends
+
+.end
