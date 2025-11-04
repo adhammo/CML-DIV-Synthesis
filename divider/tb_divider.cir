@@ -20,7 +20,7 @@ Xbalun2 clkdiff clkcm ckp ckn balun
 
 vvdd VDD 0 _VDD
 vvss VSS 0 0
-vclk clkdiff 0 dc {-vsw_clk} PULSE({-vsw_clk} {vsw_clk} 10p 5p 5p 95p 200p)
+vclk clkdiff 0 dc {-vsw_clk} PULSE({-vsw_clk} {vsw_clk} 0 {1/(10*freq)} {1/(10*freq)} {1/(2*freq)-1/(10*freq)} {1/freq})
 V2 clkcm 0 {_VDD-cm_clk-vsw_clk/2}
 
 .control
@@ -32,14 +32,10 @@ set hcopydevtype = svg
 set format = cross
 
 set appendwrite
-echo "prop_delay" > outputs.csv
 
-tran 5p 2000p
+tran {1/(10*freq)} {10/freq}
 wrdata results.txt v(ckp,ckn) v(op,on)
-let x = v(ckp)-v(ckn)
-let y = v(op)-v(on)
-meas tran tdiff TRIG x VAL=0 RISE=3 TARG y VAL=0 RISE=2
-echo "$&tdiff" >> outputs.csv
+
 .endc
 
 .subckt balun d c p n
