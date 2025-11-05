@@ -3,6 +3,8 @@
 This repository contains characterization files design scripts to run the Current Mode Logic Dividers synthesis.
 
 CML-DIV-Synthesis: Current Mode Logic Dividers Synthesis Repository
+
+```txt
     |
     ├── characterization - Contains Characterization LUTs and LUT Generation Characterization Scripts Used in notebook
     │      │  
@@ -36,3 +38,4 @@ CML-DIV-Synthesis: Current Mode Logic Dividers Synthesis Repository
     ├── latch.pkl -> Latch table holding optimization space
     │
     └── divider.pkl -> Divider table holding sensitivity curves
+```
