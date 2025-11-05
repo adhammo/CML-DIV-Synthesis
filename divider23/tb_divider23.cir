@@ -19,7 +19,7 @@ Xbalun2 clkdiff clkcm ckp ckn balun
 
 vvdd VDD 0 _VDD
 vvss VSS 0 0
-vmc mcdiff 0 dc {-vsw_mc}
+vmc mcdiff 0 dc _VSW_MC
 vclk clkdiff 0 dc {-vsw_clk} PULSE({-vsw_clk} {vsw_clk} _TRISE _TRISE _TRISE {_PERIOD/2-_TRISE} _PERIOD)
 V1 mccm VSS {_VDD-vsw_mc/2}
 V2 clkcm 0 {_VDD-cm_clk-vsw_clk/2}
@@ -34,10 +34,13 @@ set format = cross
 
 set appendwrite
 
+alter vmc = -_VSW_MC
+
 tran _TSTEP _TSTOP
 wrdata results2.txt v(mcp,mcn) v(ckp,ckn) v(op,on)
+remzerovec
 
-alter vmc = {vsw_mc}
+alter vmc = _VSW_MC
 
 tran _TSTEP _TSTOP
 wrdata results3.txt v(mcp,mcn) v(ckp,ckn) v(op,on)
