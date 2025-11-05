@@ -2,9 +2,8 @@
 
 This repository contains characterization files design scripts to run the Current Mode Logic Dividers synthesis.
 
-CML-DIV-Synthesis: Current Mode Logic Dividers Synthesis Repository
-
 ```txt
+CML-DIV-Synthesis: Current Mode Logic Dividers Synthesis Repository
     |
     ├── characterization - Contains Characterization LUTs and LUT Generation Characterization Scripts Used in notebook
     │      │  
